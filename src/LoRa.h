@@ -38,6 +38,7 @@ public:
   int packetRssi();
   float packetSnr();
   long packetFrequencyError();
+  int getSpreadingFactor();
 
   // from Print
   virtual size_t write(uint8_t byte);
@@ -84,6 +85,9 @@ public:
 
   void dumpRegisters(Stream& out);
 
+  void receiveCAD();
+  void onReceiveCAD(void (*callback)(int));
+
 private:
   void explicitHeaderMode();
   void implicitHeaderMode();
@@ -91,7 +95,6 @@ private:
   void handleDio0Rise();
   bool isTransmitting();
 
-  int getSpreadingFactor();
   long getSignalBandwidth();
 
   void setLdoFlag();
@@ -101,6 +104,9 @@ private:
   uint8_t singleTransfer(uint8_t address, uint8_t value);
 
   static void onDio0Rise();
+
+  void handleCADRise();
+  static void onCADRise();
 
 private:
   SPISettings _spiSettings;

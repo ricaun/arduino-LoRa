@@ -22,6 +22,7 @@ parsePacket	KEYWORD2
 packetRssi	KEYWORD2
 packetSnr	KEYWORD2
 packetFrequencyError	KEYWORD2
+getSpreadingFactor	KEYWORD2
 
 write	KEYWORD2
 
@@ -52,6 +53,9 @@ random	KEYWORD2
 setPins	KEYWORD2
 setSPIFrequency	KEYWORD2
 dumpRegisters	KEYWORD2
+
+receiveCAD	KEYWORD2
+onReceiveCAD	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

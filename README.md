@@ -1,4 +1,4 @@
-# Arduino LoRa
+# Arduino LoRa (CAD testing)
 
 [![Build Status](https://travis-ci.org/sandeepmistry/arduino-LoRa.svg?branch=master)](https://travis-ci.org/sandeepmistry/arduino-LoRa)
 
@@ -25,7 +25,12 @@ An [Arduino](https://arduino.cc/) library for sending and receiving data using [
 | MOSI | MOSI |
 | NSS | 10 |
 | NRESET | 9 |
-| DIO0 | 2 |
+
+| Semtech SX1276/77/78/79 | Component | Arduino |
+| :---------------------: | :------:| :------:| 
+| DIO0 | -- Diode 1n4148 --> | 2 |
+| DIO1 | -- Diode 1n4148 --> | 2 |
+| GND | -- Resistor 10k -- | 2 |
 
 
 `NSS`, `NRESET`, and `DIO0` pins can be changed by using `LoRa.setPins(ss, reset, dio0)`. `DIO0` pin is optional, it is only needed for receive callback mode. If `DIO0` pin is used, it **must** be interrupt capable via [`attachInterrupt(...)`](https://www.arduino.cc/en/Reference/AttachInterrupt).
