@@ -201,14 +201,13 @@ int LoRaClass::beginPacket(int implicitHeader)
 int LoRaClass::endPacket(bool async)
 {
   
-  if ((async) && (_onTxDone))
-      writeRegister(REG_DIO_MAPPING_1, 0x40); // DIO0 => TXDONE
+  if ((async) && (_onTxDone)) {
+    writeRegister(REG_DIO_MAPPING_1, 0x40); // DIO0 => TXDONE
+    writeRegister(REG_IRQ_FLAGS_MASK, 0x00);
 
-  writeRegister(REG_IRQ_FLAGS_MASK, 0x00);
-
-  writeRegister(REG_DIO_MAPPING_1, (uint8_t)(MAP_DIO0_LORA_TXDONE | MAP_DIO1_LORA_NOP | MAP_DIO2_LORA_NOP | MAP_DIO3_LORA_NOP));
-  writeRegister(REG_IRQ_FLAGS_MASK, (uint8_t) ~(IRQ_TX_DONE_MASK | IRQ_PAYLOAD_CRC_ERROR_MASK | IRQ_HEADER_MASK));
-
+    //writeRegister(REG_DIO_MAPPING_1, (uint8_t)(MAP_DIO0_LORA_TXDONE | MAP_DIO1_LORA_NOP | MAP_DIO2_LORA_NOP | MAP_DIO3_LORA_NOP));
+    //writeRegister(REG_IRQ_FLAGS_MASK, (uint8_t) ~(IRQ_TX_DONE_MASK | IRQ_PAYLOAD_CRC_ERROR_MASK | IRQ_HEADER_MASK));
+  }
 
   // put in TX mode
   writeRegister(REG_OP_MODE, MODE_LONG_RANGE_MODE | MODE_TX);
@@ -417,6 +416,8 @@ void LoRaClass::receive(int size)
 {
 
   writeRegister(REG_DIO_MAPPING_1, 0x00); // DIO0 => RXDONE
+  writeRegister(REG_IRQ_FLAGS_MASK, 0x00);
+  //writeRegister(REG_IRQ_FLAGS_MASK, (uint8_t) ~(IRQ_RX_DONE_MASK | IRQ_PAYLOAD_CRC_ERROR_MASK | IRQ_HEADER_MASK));
 
   if (size > 0) {
     implicitHeaderMode();
