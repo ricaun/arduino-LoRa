@@ -57,7 +57,7 @@
 
 #define MAX_PKT_LENGTH           255
 
-#ifdef ESP8266 || ESP32
+#if (ESP8266 || ESP32)
     #define ISR_PREFIX ICACHE_RAM_ATTR
 #else
     #define ISR_PREFIX
@@ -79,7 +79,7 @@ LoRaClass::LoRaClass() :
 
 int LoRaClass::begin(long frequency)
 {
-#ifdef ARDUINO_SAMD_MKRWAN1300
+#if defined(ARDUINO_SAMD_MKRWAN1300) || defined(ARDUINO_SAMD_MKRWAN1310)
   pinMode(LORA_IRQ_DUMB, OUTPUT);
   digitalWrite(LORA_IRQ_DUMB, LOW);
 
@@ -679,7 +679,6 @@ void LoRaClass::handleDio0Rise()
       // reset FIFO address
       writeRegister(REG_FIFO_ADDR_PTR, 0);
     }
-
     else if ((irqFlags & IRQ_TX_DONE_MASK) != 0) {
       if (_onTxDone) {
         _onTxDone();
